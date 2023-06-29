@@ -11,7 +11,7 @@ export default withApiAuthRequired(async function secret(req, res) {
         // This is a contrived example, normally your external API would exist on another domain.
         const response = await fetch('http://127.0.0.1:8000/secret', {
             headers: {
-                Authorization: `Bearer ${accessToken}`
+                Authorization: `Bearer ${accessToken || ""}`
             }
         });
         console.log(response)
