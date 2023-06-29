@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, Request
 from fastapi.security import HTTPBearer
+from fastapi.middleware.cors import CORSMiddleware
 from jose import jwt
 from functools import wraps
 from datetime import datetime, timedelta
@@ -7,6 +8,13 @@ from dotenv import load_dotenv
 import os
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Set the appropriate origins or use a list of specific domains
+    allow_credentials=True,
+    allow_methods=["*"],  # Set the appropriate HTTP methods
+    allow_headers=["*"],  # Set the appropriate HTTP headers
+)
 security = HTTPBearer()
 
 # Load environment variables from .env file
@@ -58,10 +66,16 @@ async def protected_route(request: Request):
     return {"message": "This route is protected"}
 
 
+@app.get("/secret")
+@auth0_secured()
+async def protected_route(request: Request):
+    return {"message": "This route is protected"}
+
+
 # Public route
 @app.get("/public")
 async def public_route():
-    return {"message": "This route is public"}
+    return {"secret": "Mega secret message"}
 
 
 # Token validation endpoint
