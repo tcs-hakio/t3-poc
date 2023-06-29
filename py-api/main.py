@@ -34,7 +34,7 @@ AUTH0_ISSUER = os.getenv('AUTH0_ISSUER')
 # Public route
 @app.get("/public")
 async def public_route():
-    return {"secret": "Mega secret message"}
+    return {"secret": "Mega public message"}
 
 
 @app.get("/secret")
