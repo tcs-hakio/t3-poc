@@ -38,10 +38,10 @@ async def public_route():
 
 
 # Protected route
-@app.get("/more-secrets")
+@app.get("/secrets")
 @jwt_secured()
 async def deco_protected_route(request: Request, token: str = Depends(token_auth_scheme)):
-    return {"message": "This route is decorator protected"}
+    return {"message": "You are authorized to see this secret message!!! WOOOO!!"}
 
 
 # Token refresh endpoint
