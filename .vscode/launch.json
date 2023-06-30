@@ -29,7 +29,8 @@
                 "8000",
                 "--reload"
             ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }
