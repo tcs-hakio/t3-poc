@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
+  console.log(user);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
