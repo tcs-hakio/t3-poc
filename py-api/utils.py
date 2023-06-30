@@ -66,7 +66,7 @@ def jwt_secured():
                 if result['status'] == 'error':
                     result['aud'] + '' # Just doing this to trigger the exception
             except Exception as e:
-                return {"message": f"Authentication failed {e}"}, 401
+                return {"message": f"Authentication failed: {result['msg']}"}, 401
 
             return await func(request, token, *args, **kwargs)
 
