@@ -8,14 +8,18 @@ export default withApiAuthRequired(async function secret(req, res) {
             scopes: ['read:forecast']
         });
         console.log(accessToken)
+
         // This is a contrived example, normally your external API would exist on another domain.
-        const response = await fetch('http://0.0.0.0:5555/metadata?offset=0&limit=10', {
+        // http://0.0.0.0:5555/metadata?offset=0&limit=10
+
+        const response = await fetch('http://127.0.0.1:8000/more-secrets', {
             headers: {
                 Authorization: `Bearer ${accessToken || ""}`
             }
         });
 
         const secret = await response.json();
+        console.log(secret)
         res.status(response.status || 200).json(secret);
     } catch (error) {
         console.error(error);

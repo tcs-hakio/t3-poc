@@ -34,18 +34,7 @@ AUTH0_ISSUER = os.getenv('AUTH0_ISSUER')
 # Public route
 @app.get("/public")
 async def public_route():
-    return {"secret": "Mega public message"}
-
-
-@app.get("/secret")
-#@auth0_secured()
-async def protected_route(token: str = Depends(token_auth_scheme)):
-    result = VerifyToken(token.credentials).verify()
-    if result.get("status"):
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return result
- 
-    return {"message": "Secret stuffz"}
+    return {"message": "Mega public message"}
 
 
 # Protected route
