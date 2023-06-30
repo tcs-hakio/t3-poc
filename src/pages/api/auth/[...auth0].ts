@@ -1,11 +1,11 @@
 // pages/api/auth/[...auth0].js
 // pages/api/auth/[auth0].js
 import { handleAuth, handleLogin } from '@auth0/nextjs-auth0';
-
+const AUDIENCE = process.env.AUTH0_API_AUDIENCE;
 export default handleAuth({
     login: handleLogin({
         authorizationParams: {
-            audience: 'http://localhost:8000/', // or AUTH0_AUDIENCE
+            audience: AUDIENCE, // or AUTH0_AUDIENCE
             // Add the `offline_access` scope to also get a Refresh Token
             scope: 'openid read:forecast' // or AUTH0_SCOPE
         }

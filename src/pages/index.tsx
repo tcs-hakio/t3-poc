@@ -12,10 +12,10 @@ export default function Home() {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
-  if (!user) return <div><a href="/api/auth/login" className="text-cyan-600">Login</a></div>
+  if (!user) return <div><Link href="/api/auth/login" className="text-cyan-600">Login</Link></div>
 
   const navigateToSecretStuff = () => {
-    router.push('/secretstuff');
+    void router.push('/secretstuff');
   }
   return (
     <>
@@ -32,7 +32,7 @@ export default function Home() {
 
 
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <a href="/api/auth/logout" className="text-cyan-600">Logout</a>
+        <Link href="/api/auth/logout" className="text-cyan-600">Logout</Link>
         <p className="text-cyan-600"> Hello {user.name}!</p>
         <button onClick={navigateToSecretStuff} className="bg-cyan-600 text-white p-2 rounded-md">Go to secret stuff</button>
       </main>

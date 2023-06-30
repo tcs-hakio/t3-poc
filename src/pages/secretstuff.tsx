@@ -2,6 +2,7 @@ import { GetServerSideProps, GetServerSidePropsResult } from 'next';
 import useSWR from 'swr';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { Secret } from '../models/Secret'
 
 const API_URL = "http://localhost:3000/api";
 const fetcher = async (uri: string) => {
@@ -32,28 +33,30 @@ interface ResponseAPI {
 }
 
 export default function SecretStuff() {
-    const { data, error } = useSWR('/api/secret', fetcher);
+    const { data, error } = useSWR<Secret, Error>('/api/secret', fetcher);
     if (error) {
         return <div>Failed to fetch secret stuff</div>;
     }
     if (!data) {
         return <div>Loading...</div>;
     }
-    const api_data = data as ResponseAPI;
-    console.log("hello")
-    console.log(api_data);
+    // const api_data = data as ResponseAPI;
+    // console.log("hello")
+    // console.log(api_data);
     return (
-        <div>{api_data.id.map((id, index) => (
-            <div>
-                <Product
-                    key={id}
-                    productName={api_data.name[index] ?? "No name"}
-                    id={id}
-                    img={api_data.image[index] ?? "No image"}
-                />
-            </div>
-        ))}
-        </div>);
+        <div> {JSON.stringify(data)}</div>
+        // <div>{api_data.id.map((id, index) => (
+        //     <div>
+        //         <Product
+        //             key={id}
+        //             productName={api_data.name[index] ?? "No name"}
+        //             id={id}
+        //             img={api_data.image[index] ?? "No image"}
+        //         />
+        //     </div>
+        // ))}
+        // </div>
+    );
 }
 
 
