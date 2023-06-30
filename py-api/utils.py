@@ -63,6 +63,7 @@ def jwt_secured():
         async def wrapper(request: Request, token: str = Depends(token_auth_scheme), *args, **kwargs):
             try:
                 result = VerifyToken(token.credentials).verify()
+                result['aud'] + "" # Just doing this to trigger the exception
             except Exception as e:
                 return {"message": f"Authentication failed {e}"}, 401
 
