@@ -1,6 +1,6 @@
 
 import os
-from fastapi import Depends, Request
+from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBearer
 import jwt
 from functools import wraps
@@ -57,19 +57,16 @@ class VerifyToken():
 
 
 # Auth0 decorator
-def jwt_secured():
-    def decorator(func):
-        @wraps(func)
-        async def wrapper(request: Request, token: str = Depends(token_auth_scheme), *args, **kwargs):
-            try:
-                result = VerifyToken(token.credentials).verify()
-                if 'status' in result:
-                    result['aud'] + '' # Just doing this to trigger the exception
-            except Exception as e:
-                return {"message": f"Authentication failed: {result['msg']}"}, 401
+def jwt_secured(func):
+    @wraps(func)
+    async def wrapper(request: Request, token: str = Depends(token_auth_scheme), *args, **kwargs):
+        try:
+            result = VerifyToken(token.credentials).verify()
+            if 'status' in result:
+                result['aud'] + '' # Just doing this to trigger the exception
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {result['msg']}")
 
-            return await func(request, token, *args, **kwargs)
+        return await func(request, token, *args, **kwargs)
 
-        return wrapper
-
-    return decorator
+    return wrapper
