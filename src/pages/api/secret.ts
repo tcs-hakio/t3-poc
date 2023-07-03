@@ -5,7 +5,6 @@ import { withApiAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 const apiBaseUrl = process.env.DS_API_BASE_URL || "";
 export default withApiAuthRequired(async function secret(req, res) {
     try {
-        console.log("secret")
         const { accessToken } = await getAccessToken(req, res, {
             scopes: ['read:forecast']
         });
