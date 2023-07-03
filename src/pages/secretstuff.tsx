@@ -1,10 +1,8 @@
 import { GetServerSideProps, GetServerSidePropsResult } from 'next';
 import useSWR from 'swr';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { Secret } from '../models/Secret'
 
-const API_URL = "http://localhost:3000/api";
 const fetcher = async (uri: string) => {
     const response = await fetch(uri);
     return response.json();
@@ -24,12 +22,6 @@ export function Product({ productName, id, img }: ProductProps) {
             <img className="max-w-xs" src={img} alt="Ditur product picture"></img>
         </div>
     )
-}
-
-interface ResponseAPI {
-    id: [string]
-    name: [string]
-    image: [string]
 }
 
 export default function SecretStuff() {
